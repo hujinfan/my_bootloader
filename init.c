@@ -1,7 +1,7 @@
 /* NAND FLASH 控制器 */
 #define NFCONF (*((volatile unsigned long *)0x4E000000))
 #define NFCONT (*((volatile unsigned long *)0x4E000004))
-#define NFCMMD (*((volatile unsigned long *)0x4E000008))
+#define NFCMMD (*((volatile unsigned char *)0x4E000008))
 #define NFADDR (*((volatile unsigned char *)0x4E00000C))
 #define NFDATA (*((volatile unsigned char *)0x4E000010))
 #define NFSTAT (*((volatile unsigned char *)0x4E000020))
@@ -36,12 +36,12 @@ void nand_init(void)
 /* NFCONT [1] 0: Force nFCE to low (Enable chip select)
  *            1: Force nFCE to high (Disable chip select)
  */
-void nand_selcet(void)
+void nand_select(void)
 {
 	NFCONT &= ~(1<<1);
 }
 
-void nand_deselcet(void)
+void nand_deselect(void)
 {
 	NFCONT |= (1<<1);
 }
@@ -95,7 +95,7 @@ void nand_read(unsigned int addr, unsigned char *buf, unsigned int len)
 	int col = addr % 2048;  /* 从一页中的某处读取数据 */
 	int i = 0;
 	/* 1.选中 */
-	nand_selcet();
+	nand_select();
 	while(i < len)
 	{
 		/* 2.发出读命令00h */
@@ -122,7 +122,7 @@ void nand_read(unsigned int addr, unsigned char *buf, unsigned int len)
 	}
 
 	/* 7.取消选中 */
-	nand_deselcet();
+	nand_deselect();
 	
 }
 

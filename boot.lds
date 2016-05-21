@@ -1,12 +1,12 @@
 SECTIONS {
     . = 0x33f80000;
-    .text   : { *(.text) }
+    .text : { *(.text) }
 	
 	. = ALIGN(4);
     .rodata : {*(.rodata*)} 
 	
 	. = ALIGN(4);
-    .data   : { *(.data) }
+    .data : { *(.data) }
 	
 	. = ALIGN(4);
     __bss_start = .;

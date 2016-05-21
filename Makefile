@@ -13,9 +13,9 @@ export 	CC LD AR OBJCOPY OBJDUMP INCLUDEDIR CFLAGS CPPFLAGS
 objs := start.o init.o boot.o
 
 boot.bin: $(objs)
-	${LD} -Tboot.lds -o boot_elf $^
-	${OBJCOPY} -O binary -S boot_elf $@
-	${OBJDUMP} -D -m arm boot_elf > boot.dis
+	${LD} -Tboot.lds -o boot.elf $^
+	${OBJCOPY} -O binary -S boot.elf $@
+	${OBJDUMP} -D -m arm boot.elf > boot.dis
 
 	
 %.o:%.c

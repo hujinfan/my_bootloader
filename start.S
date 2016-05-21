@@ -34,7 +34,7 @@ _start:
 
 /* 3. 初始化SDRAM */
 	ldr r0, =MEM_CTL_BASE
-	ldr r1, sdram_config       /* 得到sdram_config标号的当前地址 */
+	adr r1, sdram_config       /* 得到sdram_config标号的当前地址 */
 	add r3, r0, #(13*4)        /* r3 = r0 + 52 */
 
 1:

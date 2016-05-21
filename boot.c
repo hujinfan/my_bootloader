@@ -1,6 +1,6 @@
 #include "setup.h"
 
-extern uart0_init();
+extern void uart0_init(void);
 extern void puts(char *str);
 extern void nand_read(unsigned int addr, unsigned char *buf, unsigned int len);
 

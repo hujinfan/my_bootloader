@@ -22,3 +22,9 @@
 4.git push origin master
 5.git push origin --tags
 
+°æ±¾4
+1.git add -A
+2.git commit -m "v4, bootloader run success"
+3.git tag v4
+4.git push origin master
+5.git push origin --tags
