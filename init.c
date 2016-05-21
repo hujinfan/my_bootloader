@@ -56,8 +56,8 @@ void nand_cmd(unsigned char cmd)
 
 void nand_addr(unsigned int addr)
 {
-	unsigned int col  = addr%2048   /* 列地址，即页内地址 2048(NAND_PAGE_SIZE)=0x800 12bit */
-	unsigned int row  = addr/2048   /* 行地址，即页地址 page=row 2048(NAND_PAGE_SIZE) */
+	unsigned int col  = addr%2048;   /* 列地址，即页内地址 2048(NAND_PAGE_SIZE)=0x800 12bit */
+	unsigned int row  = addr/2048;  /* 行地址，即页地址 page=row 2048(NAND_PAGE_SIZE) */
 	volatile int i;
 
 	/* NFADDR [7:0] NAND flash memory address value */
@@ -81,7 +81,7 @@ void nand_wait_ready(void)
       *          1: NAND Flash memory ready to operate 
       * 如果NFSTAT=0&1=0 一直循环等待
       */
-    while(!(NFSTAT & 1))
+    while(!(NFSTAT & 1));
 }
 
 unsigned char nand_data(void)
@@ -92,7 +92,7 @@ unsigned char nand_data(void)
 /* 要读取整块数据 */
 void nand_read(unsigned int addr, unsigned char *buf, unsigned int len)
 {
-	int col = src % 2048 /* 从一页中的某处读取数据 */
+	int col = addr % 2048;  /* 从一页中的某处读取数据 */
 	int i = 0;
 	/* 1.选中 */
 	nand_selcet();
@@ -247,7 +247,7 @@ void copy_code_to_sdram(unsigned char *src, unsigned char *dest,
 	/* Nand 启动 */
 	else
 	{
-		nand_read(src, dest, len);
+		nand_read((unsigned int)src, dest, len);
 	}
 }
 

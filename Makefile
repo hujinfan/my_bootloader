@@ -5,9 +5,8 @@ AR      = arm-linux-ar
 OBJCOPY = arm-linux-objcopy
 OBJDUMP = arm-linux-objdump
 
-INCLUDEDIR 	:= $(shell pwd)/include
 CFLAGS 		:= -Wall -O2
-CPPFLAGS   	:= -nostdinc -I$(INCLUDEDIR)
+CPPFLAGS   	:= -nostdinc -nostdlib -fno-builtin
 
 export 	CC LD AR OBJCOPY OBJDUMP INCLUDEDIR CFLAGS CPPFLAGS
 

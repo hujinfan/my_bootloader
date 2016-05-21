@@ -21,9 +21,9 @@
 #ifndef __ASMARM_SETUP_H
 #define __ASMARM_SETUP_H
 
-#define u8  unsigned char;
-#define u16 unsigned short;
-#define u32 unsigned long;
+#define u8  unsigned char
+#define u16 unsigned short
+#define u32 unsigned long
 
 
 

@@ -1,5 +1,10 @@
 #include "setup.h"
 
+extern uart0_init();
+extern void puts(char *str);
+extern void nand_read(unsigned int addr, unsigned char *buf, unsigned int len);
+
+
 static struct tag *params;
 
 void setup_start_tag(void)
@@ -7,24 +12,24 @@ void setup_start_tag(void)
 	params = (struct tag *)0x30000100;
 
 	params->hdr.tag = ATAG_CORE;
-	params->hdr.size = tag_size (tag_core);
+	params->hdr.size = tag_size(tag_core);
 
 	params->u.core.flags = 0;
 	params->u.core.pagesize = 0;
 	params->u.core.rootdev = 0;
 
-	params = tag_next (params);
+	params = tag_next(params);
 }
 
 void setup_memory_tags(void)
 {
 	params->hdr.tag = ATAG_MEM;
-	params->hdr.size = tag_size (tag_mem32);
+	params->hdr.size = tag_size(tag_mem32);
 
 	params->u.mem.start = 0x30000000; /* 内存的起始地址 */
 	params->u.mem.size =  64*1024*1024;  /* 内存的大小:64M=4000000 */
 
-	params = tag_next (params);
+	params = tag_next(params);
 }
 
 int strlen(char *str)
@@ -39,7 +44,6 @@ int strlen(char *str)
 
 void strcpy(char *dest, char *src)
 {
-	char *tmp = dest;
 	while((*dest++ = *src++) != '\0');
 }
 
@@ -51,7 +55,7 @@ void setup_commandline_tag(char *cmdline)
 
 	strcpy (params->u.cmdline.cmdline, cmdline);
 
-	params = tag_next (params);
+	params = tag_next(params);
 }
 
 void setup_end_tag(void)
@@ -62,7 +66,7 @@ void setup_end_tag(void)
 
 
 
-void main(void)
+int main(void)
 {
 	/* 0. 帮内核设置串口: 内核启动的开始部分会从串口打印一些信息，但是内核一开始没有初始化串口 */
 	uart0_init();
@@ -74,7 +78,7 @@ void main(void)
 	 *   从0x60000+64地址处读2M(0x200000)内容到0x30008000地址处
 	 */
 	puts("Copy kernel from nand\n\r");
-	nand_read(0x60000+64, 0x30008000, 0x200000); 
+	nand_read(0x60000+64, (unsigned char *)0x30008000, 0x200000); 
 
 	/* 2.设置参数 */
 	puts("Set boot params\n\r");
@@ -97,5 +101,7 @@ void main(void)
 
 	/* 如果一切正常，不会执行到这里 */	
 	puts("Error!\n\r");
+
+	return -1;
 }
 
