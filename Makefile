@@ -11,16 +11,13 @@ CPPFLAGS   	:= -nostdinc -I$(INCLUDEDIR)
 
 export 	CC LD AR OBJCOPY OBJDUMP INCLUDEDIR CFLAGS CPPFLAGS
 
-objs := head.o init.o nand.o interrupt.o serial.o lcddrv.o framebuffer.o lcdlib.o main.o lib/libc.a
+objs := start.o init.o boot.o
 
-lcd.bin: $(objs)
-	${LD} -Tlcd.lds -o lcd_elf $^
-	${OBJCOPY} -O binary -S lcd_elf $@
-	${OBJDUMP} -D -m arm lcd_elf > lcd.dis
+boot.bin: $(objs)
+	${LD} -Tboot.lds -o boot_elf $^
+	${OBJCOPY} -O binary -S boot_elf $@
+	${OBJDUMP} -D -m arm boot_elf > boot.dis
 
-.PHONY : lib/libc.a
-lib/libc.a:
-	cd lib; make; cd ..
 	
 %.o:%.c
 	${CC} $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
@@ -29,6 +26,5 @@ lib/libc.a:
 	${CC} $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
 
 clean:
-	make  clean -C lib
-	rm -f lcd.bin lcd_elf lcd.dis *.o
+	rm -f *.o *.bin *.elf *.dis
 	

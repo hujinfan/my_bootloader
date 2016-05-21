@@ -7,3 +7,10 @@
 4.git remote add origin https://github.com/hujinfan/my_bootloader.git （第一次执行即可）
 5.git push -u origin master
 6.git push origin --tags
+
+版本2 
+1.git add -A
+2.git commit -m "v2, add boot.c for main()"
+3.git tag v2
+4.git push origin master
+5.git push origin --tags
