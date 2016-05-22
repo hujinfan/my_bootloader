@@ -35,3 +35,10 @@
 3.git tag v5
 4.git push origin master
 5.git push origin --tags
+
+°æ±¾6
+1.git add -A
+2.git commit -m "v6, improve the code to boot faster(increase cpu frequency and enable icache)"
+3.git tag v6
+4.git push origin master
+5.git push origin --tags
