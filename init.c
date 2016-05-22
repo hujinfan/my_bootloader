@@ -169,6 +169,22 @@ void puts(char *str)
 	}
 }
 
+void puthex(unsigned int val)
+{
+	/* 0x1234abcd */
+	int i;
+	int j;
+	puts("0x");
+	for(i = 0; i < 8; i++)
+	{
+		j = (val >> ((7-i)*4))& 0xf;
+		if((j>=0)&&(j<=9))
+			putc('0' + j);       /* 以数值形式输出 */
+		else
+			putc('A' + j - 0xa); 		
+	}
+}
+
 #if 0
 /*
  * 接收字符

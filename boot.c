@@ -3,7 +3,7 @@
 extern void uart0_init(void);
 extern void puts(char *str);
 extern void nand_read(unsigned int addr, unsigned char *buf, unsigned int len);
-
+extern void puthex(unsigned int val);
 
 static struct tag *params;
 
@@ -73,12 +73,21 @@ int main(void)
 
 	/* 定义一函数指针 */
 	void (*theKernel)(int zero, int arch, unsigned int params);
+
+	volatile unsigned int *p = (volatile unsigned int *)0x30008000;
 	
 	/* 1.从NAND FLASH里把内核读入内存 
 	 *   从0x60000+64地址处读2M(0x200000)内容到0x30008000地址处
 	 */
 	puts("Copy kernel from nand\n\r");
 	nand_read(0x60000+64, (unsigned char *)0x30008000, 0x200000); 
+
+	/* 读0x30008000位置处的值 */
+	puthex(0x1234abcb);
+	puts("\n\r");
+	puthex(*p);
+	puts("\n\r");
+	
 
 	/* 2.设置参数 */
 	puts("Set boot params\n\r");

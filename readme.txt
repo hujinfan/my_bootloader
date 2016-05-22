@@ -28,3 +28,10 @@
 3.git tag v4
 4.git push origin master
 5.git push origin --tags
+
+°æ±¾5
+1.git add -A
+2.git commit -m "v5, add print info. use the puthex()"
+3.git tag v5
+4.git push origin master
+5.git push origin --tags
